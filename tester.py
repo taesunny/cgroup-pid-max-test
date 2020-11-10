@@ -26,14 +26,18 @@ def create_threads(howmany):
 if __name__ == '__main__':
     print("Start!")
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('mode', type=str, help="test mode (process/thread)")
-    parser.add_argument('howmany', type=int, help="enter how many process or thread do you want to create")
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('--mode', type=str, help="test mode (process/thread, default: process)")
+    # parser.add_argument('--howmany', type=int, help="enter how many process or thread do you want to create")
 
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
-    mode = args.mode
-    howmany = args.howmany
+    # mode = args.mode
+    # howmany = args.howmany
+
+    mode = os.getenv('MODE', 'process')
+    howmany = int(os.getenv('HOWMANY', '1'))
+
     print("Test Mode : ", mode)
     print("Target Number to create process/thread : ", howmany)
 
@@ -43,5 +47,5 @@ if __name__ == '__main__':
         create_processes(howmany)
 
     print("Main process")
-    
+
     time.sleep(2000000)
