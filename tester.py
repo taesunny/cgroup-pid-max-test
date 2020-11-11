@@ -23,6 +23,22 @@ def create_threads(howmany):
         t.daemon = True
         t.start()
 
+def create_processes_n_threads(howmany):
+    count = 0
+
+    while count < howmany:
+        proc = Process(target=execute_for_process, args=(count+1,))
+        proc.start()
+        count += 1
+
+        if count > howmany:
+            break
+
+        t = threading.Thread(target=execute_for_thread, args=(count+1,))
+        t.daemon = True
+        t.start()
+        count += 1
+
 if __name__ == '__main__':
     print("Start!")
 
@@ -39,12 +55,16 @@ if __name__ == '__main__':
     howmany = int(os.getenv('HOWMANY', '1'))
 
     print("Test Mode : ", mode)
-    print("Target Number to create process/thread : ", howmany)
+    print("Target Number to create process/thread/each of process and thread : ", howmany)
 
     if mode == "thread":
         create_threads(howmany)
-    else:
+    elif mode == "process":
         create_processes(howmany)
+    elif mode == "both":
+        create_processes_n_threads(howmany)
+    else:
+        print("input error, please restart again")
 
     print("Main process")
 
